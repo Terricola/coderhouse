@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from datetime import datetime
+from datetime import date, datetime
 from family_data.models import BasicData
 
 
@@ -15,7 +15,8 @@ def add_data(
     birth_date: datetime, # datetime.strftime()
     ):
 
-    template = loader.get_template("index_family.html")
+    template = loader.get_template("index_data.html")
+    birth_date = datetime.strptime(birth_date, "%d-%m-%Y")
     basic_data = BasicData(name=name, last_name=last_name, age=age, birth_date=birth_date)
     basic_data.save()
 
