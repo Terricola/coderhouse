@@ -1,3 +1,4 @@
+from pipes import Template
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -31,6 +32,10 @@ def show_data(request):
     render = template.render(context_dict)
     return HttpResponse(render)
 
+def index(request):
+    my_html = open(r"D:\User\Documents\Cursos\repositorios_git\coderhouse\challenges\first_MVT\family_data\static\family_data\index.html")
+    template = Template(my_html.read())
+    my_html.close()
 
     # event_list = BasicData.objects.all()
     # return render(request, "Templates/index_family.html",
