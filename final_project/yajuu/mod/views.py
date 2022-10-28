@@ -1,17 +1,17 @@
-from users.models import User
+from mod.models import Moderator
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
-from .forms import UserForm
+from .forms import ModForm
+
 
 # Create your views here.
-# Permite agregar datos al modelo User a traves de un formulario
-def user_form(request):
+def mod_form(request):
 
     if request.method == "POST":
 
-        my_form = UserForm(request.POST)
+        my_form = ModForm(request.POST)
         
         print(my_form)
 
@@ -19,9 +19,10 @@ def user_form(request):
 
             information = my_form.cleaned_data
 
-            data = User(
+            data = Moderator(
                 name = information["name"],
                 email = information["email"],
+                age = information["age"],
                 username = information["username"],
                 password = information["password"]
             )
@@ -34,19 +35,9 @@ def user_form(request):
 
             return render(
                 request=request,
-                template_name="user_form.html",
+                template_name="mod_form.html",
             )          
     
     else:
-        my_form = UserForm()
-    return render(request, "user_form.html", {"my_form":my_form})
-
-
-# Permite ver los datos actuales en la base de datos
-def show_data(request):
-
-    event_list = User.objects.all()
-    template = loader.get_template("index_family.html")
-    context_dict = {"event_list": event_list}
-    render = template.render(context_dict)
-    return HttpResponse(render)
+        my_form = ModForm()
+    return render(request, "mod_form.html", {"my_form":my_form})

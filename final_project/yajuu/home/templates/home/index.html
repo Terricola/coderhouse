@@ -75,6 +75,8 @@
 
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="{% url 'users:add-users' %}">Registro Usuarios</a></li>
+          <li><a href="{% url 'mod:add-mod' %}">Registro Mods</a></li>
         </ul>
       </nav><!-- .navbar -->
 
@@ -102,6 +104,8 @@
   </header><!-- End Header -->
 
   <main id="main">
+    <!-- Bloque de formulario para usuarios -->
+    {% block contenido_user_form %}
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
@@ -159,6 +163,7 @@
         </div>
       </div>
     </section><!-- End Hero Slider Section -->
+    {% endblock %}
 
     <!-- ======= Post Grid Section ======= -->
     <section id="posts" class="posts">
