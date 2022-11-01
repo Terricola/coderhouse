@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import loader
 from django.template import Template, Context
 
 from post.models import Post
@@ -32,7 +33,6 @@ def search(request):
         context=context_dict,
         template_name="home/index.html",
     )
-
 
 # En costruccion:
 # def contact(request):

@@ -79,7 +79,9 @@
           <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Registro Mods</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
+          <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>
         </ul>
+        
       </nav><!-- .navbar -->
 
       <div class="position-relative">
@@ -139,7 +141,7 @@
       <hr class="my-4" />
     {% endfor %}
     {% endif %}
-    
+  
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
