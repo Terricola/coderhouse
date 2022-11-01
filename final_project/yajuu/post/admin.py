@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Moderator
+from .models import Post
 # Register your models here.
-admin.site.register(Moderator)
+admin.site.register(Post)

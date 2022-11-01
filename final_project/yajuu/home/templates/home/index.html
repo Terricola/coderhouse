@@ -29,6 +29,7 @@
   <!-- Template Main CSS Files -->
   <link href="{% static 'home/assets/css/variables.css' %}" rel="stylesheet">
   <link href="{% static 'home/assets/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'home/assets/css/real.css' %}" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: ZenBlog - v1.2.1
@@ -44,14 +45,15 @@
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 style="color: rgb(122, 2, 151);">Yajuu! respuestas</h1>
+        <h1 style="color: rgb(122, 2, 151); font-size:2.3em;">Yajuu! respuestas</h1>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
+          <!--
           <li><a href="index.html">Blog</a></li>
           <li><a href="single-post.html">Single Post</a></li>
           <li class="dropdown"><a href="category.html"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -72,11 +74,11 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
-
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="{% url 'users:add-users' %}">Registro Usuarios</a></li>
-          <li><a href="{% url 'mod:add-mod' %}">Registro Mods</a></li>
+        -->
+          <!-- <li><a href="about.html">About</a></li> -->
+          <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li>
+          <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Registro Mods</a></li>
+          <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
         </ul>
       </nav><!-- .navbar -->
 
@@ -84,7 +86,6 @@
         <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
         <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
         <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
-
         <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
         <i class="bi bi-list mobile-nav-toggle"></i>
 
@@ -103,9 +104,42 @@
 
   </header><!-- End Header -->
 
+
   <main id="main">
-    <!-- Bloque de formulario para usuarios -->
-    {% block contenido_user_form %}
+<!-- Bloque principal para body -->
+{% block contenido_body %}
+
+    <form action="{% url 'home:search' %}" method="GET">
+        <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
+          <h2>Buscar pregunta existente</h2>
+            <input type="text" name="search_param" id="post_title_or_description" placeholder="Buscar.."
+            {% if search_param %} value="{{ search_param }}" {% endif %}
+            >
+            <input type="submit" value="Buscar">
+            <a style="color: blue" href="{% url 'home:index' %}"><i class="fa fa-undo"></i></a>
+        </div>
+    </form>
+    <hr>
+    <!-- Si hay resultados en el buscador los presenta -->
+    {% if posts %}
+    {% for post in posts %}
+      <!-- Post preview-->
+      <div class="post-preview">
+        <a href="{% url 'post:post-detail' %}">
+            <h2 class="post-title">Pregunta: {{ post.title }}</h2>
+             <h3 class="post-subtitle">Descripción: {{ post.description }}</h3>
+        </a>
+        <p class="post-meta">
+           Creado por
+           <a href="#!">Admin</a> 
+           <!-- en {{ course.created_at }} -->
+        </p>
+      </div>
+      <!-- Divider-->
+      <hr class="my-4" />
+    {% endfor %}
+    {% endif %}
+    
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
@@ -163,7 +197,7 @@
         </div>
       </div>
     </section><!-- End Hero Slider Section -->
-    {% endblock %}
+{% endblock %}
 
     <!-- ======= Post Grid Section ======= -->
     <section id="posts" class="posts">

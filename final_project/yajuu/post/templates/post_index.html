@@ -1,20 +1,28 @@
-<title>Formulario Mods | Yajuu mods</title>
+<title>Haz una pregunta| Yajuu</title>
 {% extends "home/index.html" %}
 
 {% load static %}
+
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor";</script>
+{{ block.super }}
+{% endblock %}
+ 
 {% block contenido_body %}
 
 <body>
     
-    <form action="" method="POST">{% csrf_token %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.media }}
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
             <table>
 
                 {{ my_form.as_table }}
-
+                
             </table>
 
-            <input type="submit", value="Enviar", style="margin-left: 5px;">
+            <input type="submit", value="Enviar", style="margin-left: 5px;"/>
 
     </form>
         </div>

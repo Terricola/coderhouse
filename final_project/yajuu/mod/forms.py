@@ -34,7 +34,7 @@ class ModForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "class": "edad",
-                "placeholder": "",
+                "placeholder": "solo mayores de edad",
                 "required": True,
             }
         ),

@@ -1,0 +1,29 @@
+<title>Resultados busqueda | Yajuu</title>
+{% extends "home/index.html" %}
+
+{% load static %}
+ 
+{% block contenido_body %}
+
+<body>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.media }}
+        <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
+            <h1 style="color: brown;">Datos actuales en la base de datos para Post:</h1>
+            {% for event in event_list %}
+                <strong>Registro #{{ event.id }}</strong>
+                <ul>
+                    <li><strong>Pregunta:</strong> {{ event.title }}</li>
+                    <li><strong>Categoria:</strong> {{ event.tag }}</li>
+                    <li><strong>Descripción:</strong> {{ event.description }}</li>
+                </ul>
+            {% endfor %}
+
+    </form>
+        </div>
+    
+</body>
+</html>
+{% endblock %}
