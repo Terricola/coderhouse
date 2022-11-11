@@ -8,6 +8,7 @@ class UserForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "name",
                 "placeholder": "nombre completo",
                 "required": True,
@@ -21,6 +22,7 @@ class UserForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "email",
                 "placeholder": "correo",
                 "required": True,
@@ -34,6 +36,7 @@ class UserForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "username",
                 "placeholder": "12 caracteres max.",
                 "required": True,
@@ -45,8 +48,9 @@ class UserForm(forms.Form):
         max_length=15,
         label="Contraseña",
         required=False,
-        widget=forms.TextInput(
+        widget=forms.PasswordInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "password",
                 "placeholder": "15 caracteres max.",
                 "required": True,

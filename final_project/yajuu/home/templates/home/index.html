@@ -6,7 +6,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Yajuu</title>
+  <title>
+    {% block yajuu_title %}
+      Yajuu
+    {% endblock %}
+  </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -40,7 +44,7 @@
 </head>
 
 <body>
-
+  {% block yajuu_header %}
   <!-- ======= Header ======= -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
@@ -89,6 +93,7 @@
         <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
         <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
         <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+        <a href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
         <i class="bi bi-list mobile-nav-toggle"></i>
 
         <!-- ======= Search Form ======= -->
@@ -105,11 +110,12 @@
     </div>
 
   </header><!-- End Header -->
+  {% endblock %}
 
 
   <main id="main">
 <!-- Bloque principal para body -->
-{% block contenido_body %}
+{% block yajuu_body %}
 
     <form action="{% url 'home:search' %}" method="GET">
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
@@ -151,37 +157,37 @@
             <div class="swiper sliderFeaturedPosts">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-1.jpg' %}');">
+                  <a href="https://bit.ly/3FKiuAe" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-2.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>The Best Homemade Masks for Face (keep the Pimples Away)</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2>Yahoo respuestas ha cerrado!</h2>
+                      <p>Yahoo Respuestas se cerró el 4 de mayo de 2021. Yahoo Respuestas en el pasado, formó parte clave de los productos y servicios de Yahoo', pero su popularidad fue disminuyendo según los cambios en las necesidades de nuestros miembros.</p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-2.jpg' %}');">
+                  <a href="https://bit.ly/3zLTDIj" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-2.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-3.jpg' %}');">
+                  <a href="https://bit.ly/3zLTDIj" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-4.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-4.jpg' %}');">
+                  <a href="https://bit.ly/3DAwrhl" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-5.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>9 Half-up/half-down Hairstyles for Long and Medium Hair</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
@@ -199,7 +205,7 @@
         </div>
       </div>
     </section><!-- End Hero Slider Section -->
-{% endblock %}
+
 
     <!-- ======= Post Grid Section ======= -->
     <section id="posts" class="posts">
@@ -627,8 +633,10 @@
       </div>
     </section><!-- End Lifestyle Category Section -->
 
-  </main><!-- End #main -->
+  </main><!-- End #main -->  
+{% endblock %} <!-- endblock para yajuu_body-->
 
+{% block yajuu_footer %}
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -637,12 +645,12 @@
 
         <div class="row g-5">
           <div class="col-lg-4">
-            <h3 class="footer-heading">About ZenBlog</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis qui aliquid blanditiis omnis quae. Explicabo?</p>
-            <p><a href="about.html" class="footer-link-more">Learn More</a></p>
+            <h3 class="footer-heading">Acerca de Yajuu</h3>
+            <p>Yajuu es un proyecto pequeño desarrollado por una sola persona para intentar emular lo que alguna vez fue una pagina muy interesante de preguntas y respuestas.</p>
+            <p><a href="https://github.com/Terricola/coderhouse/tree/yajuu-development" class="footer-link-more">Aprenda más</a></p>
           </div>
           <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Navigation</h3>
+            <h3 class="footer-heading">Navegación</h3>
             <ul class="footer-links list-unstyled">
               <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
               <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
@@ -653,7 +661,7 @@
             </ul>
           </div>
           <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Categories</h3>
+            <h3 class="footer-heading">Categorias</h3>
             <ul class="footer-links list-unstyled">
               <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li>
               <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li>
@@ -668,7 +676,7 @@
           </div>
 
           <div class="col-lg-4">
-            <h3 class="footer-heading">Recent Posts</h3>
+            <h3 class="footer-heading">Post Recientes</h3>
 
             <ul class="footer-links footer-blog-entry list-unstyled">
               <li>
@@ -724,7 +732,7 @@
         <div class="row justify-content-between">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <div class="copyright">
-              © Copyright <strong><span>ZenBlog</span></strong>. All Rights Reserved
+              © Copyright <strong><span>Yajuu</span></strong>. Todos los derechos reservados.
             </div>
 
             <div class="credits">
@@ -770,3 +778,4 @@
 </body>
 
 </html>
+{% endblock %}
