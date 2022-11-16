@@ -3,10 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 from django.template import Template, Context
 
+from home.forms import UserRegisterForm
 from post.models import Post
 
 # Create your views here.
@@ -37,6 +38,19 @@ def search(request):
         template_name="home/index.html",
     )
 
+def register(request):
+    form = UserRegisterForm(request.POST) if request.POST else UserRegisterForm()
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Usuario creado exitosamente!")
+            return redirect("login")
+
+    return render(
+        request=request,
+        context={"form": form},
+        template_name="registration/register.html",
+    )
 
 
 # @login_required

@@ -89,12 +89,17 @@
       </nav><!-- .navbar -->
 
       <div class="position-relative">
-        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+        <a href="#" class="mx-2"><span class="bi-facebook"></span></a> <!-- Si se borran estos <span> el body del index falla completamente -->
         <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
         <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
         <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+        {% if user.is_authenticated %}
+        <a style="font-size: 1.1em;" href="" class="mf-link">Editar usuario</span></a>
+        <li class="nav"><a style="font-size: 1.1em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a></li>
+        {% else %}
         <a href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
         <i class="bi bi-list mobile-nav-toggle"></i>
+        {% endif %}
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
@@ -242,7 +247,7 @@
                   <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
                 </div>
                 <div class="post-entry-1">
-                  <a href="single-post.html"><img src="assets/img/post-landscape-7.jpg" alt="" class="img-fluid"></a>
+                  <a href="single-post.html"><img src="{% static 'home/assets/img/post-landscape-7.jp' %}" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Design</span> <span class="mx-1">&bullet;</span> <span>Mar 15th '22</span></div>
                   <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
                 </div>
@@ -254,7 +259,7 @@
                   <h2><a href="single-post.html">6 Easy Steps To Create Your Own Cute Merch For Instagram</a></h2>
                 </div>
                 <div class="post-entry-1">
-                  <a href="single-post.html"><img src="assets/img/post-landscape-6.jpg" alt="" class="img-fluid"></a>
+                  <a href="single-post.html"><img src="{% static 'home/assets/img/post-landscape-6.jpg' %}" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Tech</span> <span class="mx-1">&bullet;</span> <span>Mar 1st '22</span></div>
                   <h2><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
                 </div>

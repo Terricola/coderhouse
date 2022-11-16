@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block yajuu_title %}
-Login | Yajuu
+Registro | Yajuu
 {% endblock %}
 
 {% block yajuu_header %}
@@ -13,27 +13,20 @@ Login | Yajuu
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1 style="color: rgb(122, 2, 151); font-size:2.3em;">Yajuu! respuestas</h1>
     </a>
-    <nav id="navbar" class="navbar">
-        <ul>
-            <li><a style="font-size:1.5em;" href="{% url 'home:user-register' %}" class="mf-link">Registrar nuevo usuario</a></li>
-        </ul>
-|   </nav>
+    
+    <h1>Registrar Nuevo Usuario</h1>
 
 </header>
 {% endblock %}
 
 {% block yajuu_body %}
 
-{% if form.errors %}
-<p style="color: red">Combinación de username y password incorrecta, intenta de nuevo.</p>
-{% endif %}
-
 <form action="" method="POST">
     {% csrf_token %}
     <table>
     {{ form.as_table }}
     </table>
-    <input type="submit" class="btn btn-primary" value="Iniciar sesión" />
+    <input type="submit" class="btn btn-primary" value="Registrar usuario" />
 </form>
 
 {% endblock %}
