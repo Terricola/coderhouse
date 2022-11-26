@@ -80,10 +80,12 @@
           </li>
         -->
           <!-- <li><a href="about.html">About</a></li> -->
-          <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li>
-          <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Registro Mods</a></li>
+          <!-- <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li> --- Ya no es necesario--> 
+          {% if user.is_authenticated %}
+          <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Se un Mod!</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
-          <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>
+          {% endif %}
+          <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>          
         </ul>
         
       </nav><!-- .navbar -->
@@ -94,12 +96,16 @@
         <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
         <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
         {% if user.is_authenticated %}
-        <a style="font-size: 1.1em;" href="" class="mf-link">Editar usuario</span></a>
-        <li class="nav"><a style="font-size: 1.1em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a></li>
+          <a style="font-size: 1.2em;" href="{% url 'home:user-update' %}" class="mf-link">Editar usuario</span></a>
+          |
+          <a style="font-size: 1.2em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a>
+          {% if avatar_url %}
+          <a href="{% url 'home:avatar-load' %}"><img height="160px" src="{{avatar_url}}"></a>
+          {% endif %}
         {% else %}
-        <a href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
-        <i class="bi bi-list mobile-nav-toggle"></i>
+          <a style="font-size: 1.3em;" href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
         {% endif %}
+        <li class="bi bi-list mobile-nav-toggle"></li>
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
@@ -121,9 +127,24 @@
   <main id="main">
 <!-- Bloque principal para body -->
 {% block yajuu_body %}
-
+  {% if messages %}
+    {% for message in messages %}
+      <div style="text-align:center; font-size: 1.2em; font-weight: 400" class="alert {{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% for profile in profiles %}
+    <li>
+      <img src="{{ profile.image.url }}">
+    </li>
+  {% endfor %}
     <form action="{% url 'home:search' %}" method="GET">
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
+          {% if user.is_authenticated %}
+          {% else %}
+          <p style="color: rgb(122, 2, 151); font-size:1.5em;">Registrate! para hacer una pregunta</p>
+          {% endif %}
           <h2>Buscar pregunta existente</h2>
             <input type="text" name="search_param" id="post_title_or_description" placeholder="Buscar.."
             {% if search_param %} value="{{ search_param }}" {% endif %}
