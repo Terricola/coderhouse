@@ -58,12 +58,12 @@ def post_form(request):
 # Ver todo el detalle de la pregunta seleccionada
 class PostDetailView(DetailView):
     model = Post
-    template_name ="post/post_detail.html"
+    template_name ="post_detail.html"
     fields = ["title", "tag", "description"]
 
     def get(self, request, pk):
         post = Post.objects.get(id=pk)
-        comments = Post.objects.filter(post=post).order_by("-updated_at")
+        comments = Post.description
         comment_form = CommentForm()
         context = {
             "post": post,

@@ -1,51 +1,9 @@
 <title>Formulario Mods | Yajuu mods</title>
 {% extends "home/index.html" %}
-
 {% load static %}
 
 {% block yajuu_body %}
 
-{% block yajuu_header %}
-<!-- ======= Header ======= -->
-<header id="header" class="header d-flex align-items-center fixed-top">
-  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-    <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 style="color: rgb(122, 2, 151); font-size:2.3em;">Yajuu! respuestas</h1>
-    </a>
-    <nav id="navbar" class="navbar">
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Se un Mod!</a></li>
-        <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
-        {% endif %}
-        <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>          
-      </ul>
-      
-    </nav><!-- .navbar -->
-
-    <div class="position-relative">
-      <a href="#" class="mx-2"><span class="bi-facebook"></span></a> <!-- Si se borran estos <span> el body del index falla completamente -->
-      <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-      <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
-      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
-      {% if user.is_authenticated %}
-      <a style="font-size: 1.2em;" href="{% url 'home:user-update' %}" class="mf-link">Editar usuario</span></a>
-      |
-      <a style="font-size: 1.2em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a>
-      {% else %}
-      <a style="font-size: 1.3em;" href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
-      {% endif %}
-      <li class="bi bi-list mobile-nav-toggle"></li>
-
-    </div>
-
-  </div>
-
-</header><!-- End Header -->
-{% endblock %}
 <body>
     
     <form action="" method="POST">{% csrf_token %}

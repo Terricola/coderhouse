@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block yajuu_title %}
-Resultados busqueda | Yajuu  
+{{ post.title }} | Yajuu  
 {% endblock %}
 
-{% bloc yajuu_header %}
+{% block yajuu_header %}
 
 <h1>{{ post.title }}</h1>
 
@@ -42,25 +42,6 @@ Resultados busqueda | Yajuu
         <!-- Divider-->
         <hr class="my-4" />
         
-        <!-- Comment creation -->
-        <form method="POST" action="{% url 'post:comment-create' course.id %}">
-            {% csrf_token %}
-            {{ comment_form }}
-        <input type="submit" value="Publicar comentario">
-        </form>
-        {% if not comments %}
-            <p></p>
-        {% endif %}
-
-        <!-- Comments list -->
-        {% for comment in comments %}
-            <p> {{ comment.text }}
-                ({{ comment.owner.username }} | {{ comment.updated_at }})
-                {% if user == comment.owner or user.is_superuser %}
-                <a href="{% url 'post:comment-delete' comment.id %}"><i class="fa fa-trash" style="color: #881a1a;"></i></a>
-                {% endif %}
-            </p>
-        {% endfor %}
 
 </body>
 </html>
