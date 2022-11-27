@@ -8,6 +8,7 @@ Yajuu es un proyecto pequeño desarrollado por una sola persona para intentar em
 El proyecto actualmente esta en una fase **muy temprana** de desarrollo y no representa el producto final.
 
 **Nombre del desarrollador**: Michael Franco
+
 **Tecnologias usadas**: HTML5, CSS, Python con Django.
 
 ## Características del proyecto
