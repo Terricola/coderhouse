@@ -18,17 +18,27 @@ El proyecto actualmente esta en una fase **muy temprana** de desarrollo y no rep
 | Nombre App          |Modelos                         |Vistas                         |Templates |
 |----------------|-------------------------------|-----------------------------|--------|
 |home| Avatar           | get_avatar / index / search / register /user_update / avatar_load          |index /  avatar_form / login / register / user_form / contact(_en construcción_)|  
-|mod|Moderator            |mod_form            |mod_form|
-|post|Post|post_form / post_detail / create_model_view(_en revisión_)|post_index / post_detail
+|mod|Moderator            |mod_form / login_request / register           |mod_form / login / register|
+|post|Post / Comment |post_form / post_detail / PostListView / PostDetailView / PostCreateView / PostUpdateView / PostDeleteView / CommentCreateView / CommentDeleteView |post_index / post_detail
 |users|User|user_form / show_data(_en revisión_)|user_form
 
 ## Instalación
 
 Por favor copiar el repositorio en la rama correspondiente para este proyecto, la rama es: **yajuu-development**
 
-En una terminal , bajamos el repositorio:
+En una terminal clonamos el repositorio(SSH):
+```sh
+git clone git@github.com:Terricola/coderhouse.git
+```
+
+Bajamos los ultimos cambios y cambiamos a la rama correcta:
 ```sh
 git pull origin yajuu-develpment
 git checkout yajuu-development
+```
+
+Instalamos los requisitos con pip:
+```sh
+pip install -r requirements.txt
 ```
 Listo!
