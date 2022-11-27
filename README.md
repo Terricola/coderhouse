@@ -3,8 +3,11 @@
 
 Yajuu es un proyecto pequeño desarrollado por una sola persona para intentar emular lo que alguna vez fue una pagina muy interesante de preguntas y respuestas.
 
-El proyecto actualmente esta en una fase **muy temprana** de desarrollo y no representa el producto final. 
 
+
+El proyecto actualmente esta en una fase **muy temprana** de desarrollo y no representa el producto final.
+
+**Nombre del desarrollador**: Michael Franco
 **Tecnologias usadas**: HTML5, CSS, Python con Django.
 
 ## Características del proyecto
@@ -14,7 +17,7 @@ El proyecto actualmente esta en una fase **muy temprana** de desarrollo y no rep
 
 | Nombre App          |Modelos                         |Vistas                         |Templates |
 |----------------|-------------------------------|-----------------------------|--------|
-|home| N/A            | index / search           |index / contact(_en construcción_)|  
+|home| Avatar           | get_avatar / index / search / register /user_update / avatar_load          |index /  avatar_form / login / register / user_form / contact(_en construcción_)|  
 |mod|Moderator            |mod_form            |mod_form|
 |post|Post|post_form / post_detail / create_model_view(_en revisión_)|post_index / post_detail
 |users|User|user_form / show_data(_en revisión_)|user_form
