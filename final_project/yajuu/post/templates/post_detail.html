@@ -4,27 +4,64 @@
 {% block yajuu_title %}
 Resultados busqueda | Yajuu  
 {% endblock %}
+
+{% bloc yajuu_header %}
+
+<h1>{{ post.title }}</h1>
+
+{% endblock %}
  
 {% block yajuu_body %}
 <body>
-    
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.media }}
-        <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
-            <h1 style="color: rgb(122, 2, 151);">Datos actuales en la base de datos para Post:</h1>
-            {% for event in event_list %}
-                <strong style="font-size: 1.4em;">Registro #{{ event.id }}</strong>
-                <ul>
-                    <li style="font-size: 1.3em;"><strong>Pregunta:</strong> {{ event.title }}</li>
-                    <li style="font-size: 1.3em;"><strong>Categoria:</strong> {{ event.tag }}</li>
-                    <li style="font-size: 1.3em;"><strong>Descripción:</strong> {{ event.description }}</li>
-                </ul>
-            {% endfor %}
+    <!-- Post preview-->
+    <div class="post-preview">
+        <h3 class="post-subtitle">Catergoria: {{ post.tag }}</h3>
+        <p class="post-meta">
+            Creado por
+            <span style="color: #0b4956;" href="">{{ post.owner.username }}</span>
+            ( {{ post.created_at }} )
+            <br>
+            Última fecha de actualización ( {{ post.updated_at }} )
+        </p>
 
-    </form>
-        </div>
-    
+        <!-- Description -->
+        <p class="card-text ">{{ post.description|safe }}</p> <!-- ckeditor-->
+        <!-- Update-Delete link only for the owner -->
+        {% if user == post.owner or user.is_superuser %}
+        <p style="text-align: center">
+            <a href="{% url 'post:post-update' post.id %}">
+                <i class="fa fa-pencil" style="color: #1c1c91;"></i> Editar Curso
+            </a>
+            &ensp; | &ensp;
+            <a href="{% url 'post:post-delete' post.id %}">
+                <i class="fa fa-trash" style="color: #881a1a;"></i> Eliminar Curso
+            </a>
+        </p>
+        {% endif %}
+
+        <!-- Divider-->
+        <hr class="my-4" />
+        
+        <!-- Comment creation -->
+        <form method="POST" action="{% url 'post:comment-create' course.id %}">
+            {% csrf_token %}
+            {{ comment_form }}
+        <input type="submit" value="Publicar comentario">
+        </form>
+        {% if not comments %}
+            <p></p>
+        {% endif %}
+
+        <!-- Comments list -->
+        {% for comment in comments %}
+            <p> {{ comment.text }}
+                ({{ comment.owner.username }} | {{ comment.updated_at }})
+                {% if user == comment.owner or user.is_superuser %}
+                <a href="{% url 'post:comment-delete' comment.id %}"><i class="fa fa-trash" style="color: #881a1a;"></i></a>
+                {% endif %}
+            </p>
+        {% endfor %}
+
 </body>
 </html>
 {% endblock %}

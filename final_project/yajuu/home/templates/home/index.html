@@ -85,7 +85,7 @@
           <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Se un Mod!</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
           {% endif %}
-          <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>          
+          <li><a style="font-size:1.5em;" href="{% url 'post:post-listt' %}" class="mf-link">Ver preguntas actuales</a></li>          
         </ul>
         
       </nav><!-- .navbar -->
@@ -100,8 +100,10 @@
           |
           <a style="font-size: 1.2em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a>
           {% if avatar_url %}
-          <a href="{% url 'home:avatar-load' %}"><img height="160px" src="{{avatar_url}}"></a>
+          <div style="float: right;">
+          <a href="{% url 'home:avatar-load' %}"><img height="40px" src="{{avatar_url}}"></a>
           {% endif %}
+          </div>
         {% else %}
           <a style="font-size: 1.3em;" href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
         {% endif %}
@@ -134,11 +136,7 @@
       </div>
     {% endfor %}
   {% endif %}
-  {% for profile in profiles %}
-    <li>
-      <img src="{{ profile.image.url }}">
-    </li>
-  {% endfor %}
+  
     <form action="{% url 'home:search' %}" method="GET">
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
           {% if user.is_authenticated %}
@@ -159,21 +157,48 @@
     {% for post in posts %}
       <!-- Post preview-->
       <div class="post-preview">
-        <a href="{% url 'post:post-detail' %}">
+        <a href="{% url 'post:post-detail' post.id %}">
             <h2 class="post-title">Pregunta: {{ post.title }}</h2>
              <h3 class="post-subtitle">Descripción: {{ post.description }}</h3>
         </a>
         <p class="post-meta">
            Creado por
-           <a href="#!">Admin</a> 
-           <!-- en {{ course.created_at }} -->
+           <span style="color: #0b4956;" href="">{{ post.owner.username }}</span>
+           ( {{ post.created_at }} )
         </p>
       </div>
       <!-- Divider-->
       <hr class="my-4" />
     {% endfor %}
     {% endif %}
-  
+
+    {% block pagination %}
+    <!--Pagination Class Based Views-->
+    {% if is_paginated %}
+    <div>
+        <div>
+            <span>
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a> |
+                    <a href="?page={{ post_list.previous_page_number }}">previous</a> |
+                {% endif %}
+    
+                {% if page_obj.paginator.num_pages > 1 %}
+                <span>
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
+                </span>
+                {% endif %}
+    
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a> |
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+    <!--end of Pagination-->
+    {% endblock %}
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
