@@ -4,18 +4,13 @@
 {% block yajuu_title %}
 {{ post.title }} | Yajuu  
 {% endblock %}
-
-{% block yajuu_header %}
-
-<h1>{{ post.title }}</h1>
-
-{% endblock %}
  
 {% block yajuu_body %}
-<body>
+
     <!-- Post preview-->
     <div class="post-preview">
-        <h3 class="post-subtitle">Catergoria: {{ post.tag }}</h3>
+        <h1>{{ post.title }}</h1>
+        <h3 class="" style="font-size: 1.4em;">Catergoria: {{ post.tag }}</h3>
         <p class="post-meta">
             Creado por
             <span style="color: #0b4956;" href="">{{ post.owner.username }}</span>
@@ -25,24 +20,42 @@
         </p>
 
         <!-- Description -->
-        <p class="card-text ">{{ post.description|safe }}</p> <!-- ckeditor-->
+        <p class="" style="font-size: 1.5em;">{{ post.description|safe }}</p> <!-- ckeditor-->
         <!-- Update-Delete link only for the owner -->
         {% if user == post.owner or user.is_superuser %}
-        <p style="text-align: center">
-            <a href="{% url 'post:post-update' post.id %}">
-                <i class="fa fa-pencil" style="color: #1c1c91;"></i> Editar Curso
-            </a>
-            &ensp; | &ensp;
-            <a href="{% url 'post:post-delete' post.id %}">
-                <i class="fa fa-trash" style="color: #881a1a;"></i> Eliminar Curso
-            </a>
-        </p>
+            <p style="text-align: center">
+                <a href="{% url 'post:post-update' post.id %}">
+                    <i style="color: #1c1c91;"></i> Editar Curso
+                </a>
+                &ensp; | &ensp;
+                <a href="{% url 'post:post-delete' post.id %}">
+                    <i class="" style="color: #881a1a;"></i> Eliminar Curso
+                </a>
+            </p>
         {% endif %}
 
         <!-- Divider-->
         <hr class="my-4" />
-        
 
-</body>
-</html>
+        <!-- Comment creation-->
+        <form method="post" action="{% url 'post:comment-create' post.id %}">
+            {% csrf_token %}
+            {{ comment_form }}
+        <input type="submit" value="Publicar comentario">
+        </form>
+        {% if not comments %}
+            <p></p>
+        {% endif %}
+        
+        <!-- Comments list-->
+        {% for post in posts %}
+            <p>
+                {{ comment.text }}
+                ({{ comment.owner.username }} | {{ comment.update_at }})
+                {% if user == comment.owner or user.is_superuser %}
+                    <a href="{% url 'post:comment-delete' post.id %}"></a>
+                {% endif %}
+            </p>
+        {% endfor %}
+
 {% endblock %}

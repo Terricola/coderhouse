@@ -106,8 +106,8 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     fields = ["title", "tag", "description"]
 
     def get_success_url(self):
-        course_id = self.kwargs["pk"]
-        return reverse_lazy("post:post-detail", kwargs={"pk": course_id})
+        post_id = self.kwargs["pk"]
+        return reverse_lazy("post:post-detail", kwargs={"pk": post_id})
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
@@ -117,20 +117,20 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     def post(self, request, pk):
-        course = get_object_or_404(Post, id=pk)
+        post = get_object_or_404(Post, id=pk)
         comment = Comment(
-            text=request.POST["comment_text"], owner=request.user, course=course
+            text=request.POST["comment_text"], owner=request.user, post=post
         )
         comment.save()
-        return redirect(reverse("course:course-detail", kwargs={"pk": pk}))
+        return redirect(reverse("post:post-detail", kwargs={"pk": pk}))
 
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
 
     def get_success_url(self):
-        course = self.object.course
-        return reverse("course:course-detail", kwargs={"pk": course.id})
+        post = self.object.course
+        return reverse("post:post-detail", kwargs={"pk": post.id})
 
 
 # def post_list(request):

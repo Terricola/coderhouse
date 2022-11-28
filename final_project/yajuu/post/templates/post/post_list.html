@@ -28,9 +28,10 @@ Preguntas | Yajuu
 
 {% for post in post_list %}
 <!-- Post preview -->
-    <h2 class="post-title">La pregunta es: {{ post.title }}</h2>
-    <h3 class="post-subtitle">Para la categoria: {{ post.tag }}</h3>
-
+    <a href="{% url 'post:post-detail' post.id %}">
+        <h2 class="post-title">La pregunta es: {{ post.title }}</h2>
+        <h3 class="post-subtitle">Para la categoria: {{ post.tag }}</h3>
+    </a>
 <p class="post-meta">
     Creado en:
     <span style="color: #0b4956;" href="">{{ post.created_at }}</span>

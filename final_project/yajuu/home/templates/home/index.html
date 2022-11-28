@@ -85,7 +85,7 @@
           <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Se un Mod!</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
           {% endif %}
-          <li><a style="font-size:1.5em;" href="{% url 'post:post-listt' %}" class="mf-link">Ver preguntas actuales</a></li>          
+          <li><a style="font-size:1.5em;" href="{% url 'post:post-list' %}" class="mf-link">Ver preguntas actuales</a></li>          
         </ul>
         
       </nav><!-- .navbar -->
@@ -95,6 +95,7 @@
         <a href="#" class="mx-2"><span class=""></span></a>
         <a href="#" class="mx-2"><span class=""></span></a>
         <a href="#" class="mx-2 js-search-open"><span class=""></span></a>
+
         {% if user.is_authenticated %}
           <a style="font-size: 1.2em;" href="{% url 'home:user-update' %}" class="mf-link">Editar usuario</span></a>
           |
@@ -172,33 +173,7 @@
     {% endfor %}
     {% endif %}
 
-    {% block pagination %}
-    <!--Pagination Class Based Views-->
-    {% if is_paginated %}
-    <div>
-        <div>
-            <span>
-                {% if page_obj.has_previous %}
-                    <a href="?page=1">&laquo; first</a> |
-                    <a href="?page={{ post_list.previous_page_number }}">previous</a> |
-                {% endif %}
-    
-                {% if page_obj.paginator.num_pages > 1 %}
-                <span>
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
-                </span>
-                {% endif %}
-    
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}">next</a> |
-                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                {% endif %}
-            </span>
-        </div>
-    </div>
-    {% endif %}
-    <!--end of Pagination-->
-    {% endblock %}
+
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
@@ -320,7 +295,7 @@
               <div class="col-lg-4">
 
                 <div class="trending">
-                  <h3 style="color: rgb(52, 177, 52);">Trending</h3>
+                  <h3 style="color: rgb(52, 177, 52);">Trending<em>(En construcción)</em></h3>
                   <ul class="trending-post">
                     <li>
                       <a href="single-post.html">
@@ -686,6 +661,30 @@
 
   </main><!-- End #main -->  
 {% endblock %} <!-- endblock para yajuu_body-->
+
+{% block pagination %}
+<!--Pagination Class Based Views-->
+{% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a> |
+                <a href="?page={{ post_list.previous_page_number }}">previous</a> |
+            {% endif %}
+
+            {% if page_obj.paginator.num_pages > 1 %}
+            
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
+            
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a> |
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+
+{% endif %}
+<!--end of Pagination-->
+{% endblock %}
 
 {% block yajuu_footer %}
   <!-- ======= Footer ======= -->
