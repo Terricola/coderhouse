@@ -6,7 +6,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Yajuu</title>
+  <title>
+    {% block yajuu_title %}
+      Yajuu
+    {% endblock %}
+  </title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -40,7 +44,7 @@
 </head>
 
 <body>
-
+  {% block yajuu_header %}
   <!-- ======= Header ======= -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
@@ -76,20 +80,35 @@
           </li>
         -->
           <!-- <li><a href="about.html">About</a></li> -->
-          <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li>
-          <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Registro Mods</a></li>
+          <!-- <li><a style="font-size:1.5em;" href="{% url 'users:add-users' %}" class="mf-link">Registro Usuarios</a></li> --- Ya no es necesario--> 
+          {% if user.is_authenticated %}
+          <li><a style="font-size:1.5em;" href="{% url 'mod:add-mod' %}" class="mf-link">Se un Mod!</a></li>
           <li><a style="font-size:1.5em;" href="{% url 'post:add-post' %}" class="mf-link">Haz una pregunta!</a></li>
-          <li><a style="font-size:1.5em;" href="{% url 'post:post-detail' %}" class="mf-link">Ver preguntas actuales</a></li>
+          {% endif %}
+          <li><a style="font-size:1.5em;" href="{% url 'post:post-list' %}" class="mf-link">Ver preguntas actuales</a></li>          
         </ul>
         
       </nav><!-- .navbar -->
 
       <div class="position-relative">
-        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
-        <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-        <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
-        <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
-        <i class="bi bi-list mobile-nav-toggle"></i>
+        <a href="#" class="mx-2"><span class=""></span></a> <!-- Si se borran estos <span> el body del index falla completamente -->
+        <a href="#" class="mx-2"><span class=""></span></a>
+        <a href="#" class="mx-2"><span class=""></span></a>
+        <a href="#" class="mx-2 js-search-open"><span class=""></span></a>
+
+        {% if user.is_authenticated %}
+          <a style="font-size: 1.2em;" href="{% url 'home:user-update' %}" class="mf-link">Editar usuario</span></a>
+          |
+          <a style="font-size: 1.2em;" href="{% url 'logout' %}" class="mf-link">Cerrar sesión - {{ user.username }}</span></a>
+          {% if avatar_url %}
+          <div style="float: right;">
+          <a href="{% url 'home:avatar-load' %}"><img height="40px" src="{{avatar_url}}"></a>
+          {% endif %}
+          </div>
+        {% else %}
+          <a style="font-size: 1.3em;" href="{% url 'login' %}" class="mf-link">Iniciar sesión</span></a>
+        {% endif %}
+        <li class="bi bi-list mobile-nav-toggle"></li>
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
@@ -105,14 +124,26 @@
     </div>
 
   </header><!-- End Header -->
+  {% endblock %}
 
 
   <main id="main">
 <!-- Bloque principal para body -->
-{% block contenido_body %}
-
+{% block yajuu_body %}
+  {% if messages %}
+    {% for message in messages %}
+      <div style="text-align:center; font-size: 1.2em; font-weight: 400" class="alert {{ message.tags }}" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  
     <form action="{% url 'home:search' %}" method="GET">
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
+          {% if user.is_authenticated %}
+          {% else %}
+          <p style="color: rgb(122, 2, 151); font-size:1.5em;">Registrate! para hacer una pregunta</p>
+          {% endif %}
           <h2>Buscar pregunta existente</h2>
             <input type="text" name="search_param" id="post_title_or_description" placeholder="Buscar.."
             {% if search_param %} value="{{ search_param }}" {% endif %}
@@ -127,21 +158,22 @@
     {% for post in posts %}
       <!-- Post preview-->
       <div class="post-preview">
-        <a href="{% url 'post:post-detail' %}">
+        <a href="{% url 'post:post-detail' post.id %}">
             <h2 class="post-title">Pregunta: {{ post.title }}</h2>
              <h3 class="post-subtitle">Descripción: {{ post.description }}</h3>
         </a>
         <p class="post-meta">
            Creado por
-           <a href="#!">Admin</a> 
-           <!-- en {{ course.created_at }} -->
+           <span style="color: #0b4956;" href="">{{ post.owner.username }}</span>
+           ( {{ post.created_at }} )
         </p>
       </div>
       <!-- Divider-->
       <hr class="my-4" />
     {% endfor %}
     {% endif %}
-  
+
+
 
     <!-- ======= Hero Slider Section ======= -->
     <section id="hero-slider" class="hero-slider">
@@ -151,37 +183,37 @@
             <div class="swiper sliderFeaturedPosts">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-1.jpg' %}');">
+                  <a href="https://bit.ly/3FKiuAe" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-2.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>The Best Homemade Masks for Face (keep the Pimples Away)</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2>Yahoo respuestas ha cerrado!</h2>
+                      <p>Yahoo Respuestas se cerró el 4 de mayo de 2021. Yahoo Respuestas en el pasado, formó parte clave de los productos y servicios de Yahoo', pero su popularidad fue disminuyendo según los cambios en las necesidades de nuestros miembros.</p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-2.jpg' %}');">
+                  <a href="https://bit.ly/3zLTDIj" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-2.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-3.jpg' %}');">
+                  <a href="https://bit.ly/3zLTDIj" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-4.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>13 Amazing Poems from Shel Silverstein with Valuable Life Lessons</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
 
                 <div class="swiper-slide">
-                  <a href="single-post.html" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/post-slide-4.jpg' %}');">
+                  <a href="https://bit.ly/3DAwrhl" class="img-bg d-flex align-items-end" style="background-image: url('{% static 'home/assets/img/yahoo-answer-5.jpg' %}');">
                     <div class="img-bg-inner">
-                      <h2>9 Half-up/half-down Hairstyles for Long and Medium Hair</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem neque est mollitia! Beatae minima assumenda repellat harum vero, officiis ipsam magnam obcaecati cumque maxime inventore repudiandae quidem necessitatibus rem atque.</p>
+                      <h2></h2>
+                      <p></p>
                     </div>
                   </a>
                 </div>
@@ -199,7 +231,7 @@
         </div>
       </div>
     </section><!-- End Hero Slider Section -->
-{% endblock %}
+
 
     <!-- ======= Post Grid Section ======= -->
     <section id="posts" class="posts">
@@ -236,7 +268,7 @@
                   <h2><a href="single-post.html">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2>
                 </div>
                 <div class="post-entry-1">
-                  <a href="single-post.html"><img src="assets/img/post-landscape-7.jpg" alt="" class="img-fluid"></a>
+                  <a href="single-post.html"><img src="{% static 'home/assets/img/post-landscape-7.jp' %}" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Design</span> <span class="mx-1">&bullet;</span> <span>Mar 15th '22</span></div>
                   <h2><a href="single-post.html">Why Craigslist Tampa Is One of The Most Interesting Places On the Web?</a></h2>
                 </div>
@@ -248,7 +280,7 @@
                   <h2><a href="single-post.html">6 Easy Steps To Create Your Own Cute Merch For Instagram</a></h2>
                 </div>
                 <div class="post-entry-1">
-                  <a href="single-post.html"><img src="assets/img/post-landscape-6.jpg" alt="" class="img-fluid"></a>
+                  <a href="single-post.html"><img src="{% static 'home/assets/img/post-landscape-6.jpg' %}" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">Tech</span> <span class="mx-1">&bullet;</span> <span>Mar 1st '22</span></div>
                   <h2><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should Know</a></h2>
                 </div>
@@ -263,7 +295,7 @@
               <div class="col-lg-4">
 
                 <div class="trending">
-                  <h3 style="color: rgb(52, 177, 52);">Trending</h3>
+                  <h3 style="color: rgb(52, 177, 52);">Trending<em>(En construcción)</em></h3>
                   <ul class="trending-post">
                     <li>
                       <a href="single-post.html">
@@ -627,8 +659,34 @@
       </div>
     </section><!-- End Lifestyle Category Section -->
 
-  </main><!-- End #main -->
+  </main><!-- End #main -->  
+{% endblock %} <!-- endblock para yajuu_body-->
 
+{% block pagination %}
+<!--Pagination Class Based Views-->
+{% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a> |
+                <a href="?page={{ post_list.previous_page_number }}">previous</a> |
+            {% endif %}
+
+            {% if page_obj.paginator.num_pages > 1 %}
+            
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
+            
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a> |
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+
+{% endif %}
+<!--end of Pagination-->
+{% endblock %}
+
+{% block yajuu_footer %}
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -637,12 +695,13 @@
 
         <div class="row g-5">
           <div class="col-lg-4">
-            <h3 class="footer-heading">About ZenBlog</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis qui aliquid blanditiis omnis quae. Explicabo?</p>
-            <p><a href="about.html" class="footer-link-more">Learn More</a></p>
+            <h3 class="footer-heading">Acerca de Yajuu</h3>
+            <p>Yajuu es un proyecto pequeño desarrollado por una sola persona para intentar emular lo que alguna vez fue una pagina muy interesante de preguntas y respuestas.</p>
+            <p><a href="https://github.com/Terricola/coderhouse/tree/yajuu-development" class="footer-link-more">Aprenda más</a></p>
+            <p><a href="https://github.com/Terricola/" class="footer-link-more">Acerca de mi</a></p>
           </div>
           <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Navigation</h3>
+            <h3 class="footer-heading">Navegación</h3>
             <ul class="footer-links list-unstyled">
               <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
               <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
@@ -653,7 +712,7 @@
             </ul>
           </div>
           <div class="col-6 col-lg-2">
-            <h3 class="footer-heading">Categories</h3>
+            <h3 class="footer-heading">Categorias</h3>
             <ul class="footer-links list-unstyled">
               <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li>
               <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li>
@@ -668,7 +727,7 @@
           </div>
 
           <div class="col-lg-4">
-            <h3 class="footer-heading">Recent Posts</h3>
+            <h3 class="footer-heading">Post Recientes</h3>
 
             <ul class="footer-links footer-blog-entry list-unstyled">
               <li>
@@ -724,7 +783,7 @@
         <div class="row justify-content-between">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <div class="copyright">
-              © Copyright <strong><span>ZenBlog</span></strong>. All Rights Reserved
+              © Copyright <strong><span>Yajuu</span></strong>. Todos los derechos reservados.
             </div>
 
             <div class="credits">
@@ -770,3 +829,4 @@
 </body>
 
 </html>
+{% endblock %}

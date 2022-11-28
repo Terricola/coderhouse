@@ -1,0 +1,24 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block yajuu_title %}
+Cargar Avatar | Yajuu
+{% endblock %}
+
+{% block yajuu_header %}
+<header id="header" class="header d-flex align-items-center fixed-top">
+    
+    <h2>Cargar Imagen de Avatar</h2>
+
+</header>
+{% endblock %}
+
+
+{% block yajuu_body %}
+    <h3>Usuario: {{user.username}} | {{user.first_name}} {{user.last_name}}</h3>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Cargar Imagen</button>
+    </form>
+{% endblock %}

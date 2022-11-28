@@ -1,6 +1,8 @@
 from django import forms
 
-class ModForm(forms.Form):
+from mod.models import Moderator
+
+class ModForm(forms.ModelForm):
 
     name = forms.CharField(
         max_length=40,
@@ -8,6 +10,7 @@ class ModForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "name",
                 "placeholder": "nombre completo",
                 "required": True,
@@ -21,6 +24,7 @@ class ModForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "email",
                 "placeholder": "correo",
                 "required": True,
@@ -33,6 +37,7 @@ class ModForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "edad",
                 "placeholder": "solo mayores de edad",
                 "required": True,
@@ -46,6 +51,7 @@ class ModForm(forms.Form):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "username",
                 "placeholder": "12 caracteres max.",
                 "required": True,
@@ -57,11 +63,16 @@ class ModForm(forms.Form):
         max_length=15,
         label="Contraseña",
         required=False,
-        widget=forms.TextInput(
+        widget=forms.PasswordInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "password",
                 "placeholder": "15 caracteres max.",
                 "required": True,
             }
         ),
     )
+
+    class Meta:
+        model = Moderator
+        fields = ["name", "email", "age", "username", "password"]

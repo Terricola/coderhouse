@@ -18,6 +18,7 @@ class PostForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "title",
                 "placeholder": "Pregunta",
                 "required": True,
@@ -32,6 +33,7 @@ class PostForm(forms.ModelForm):
         widget=forms.Select(
             choices=tag_choices,
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "tag",
                 "placeholder": "Categoria tema",
                 "required": True,
@@ -45,13 +47,35 @@ class PostForm(forms.ModelForm):
         required=False,
         widget=CKEditorWidget(
             attrs={
+                'style': 'font-size: 1.3em',
                 "class": "description",
                 "placeholder": "Por favor agrega una despcripción a tu pregunta",
                 "required": True,
             }
         ),
     )
-
+    
     class Meta:
         model = Post
         fields = ["title", "tag", "description"]
+
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(
+        label="",
+        required=False,
+        max_length=500,
+        min_length=10,
+        strip=True,
+        widget=forms.Textarea(
+            attrs={
+                "class": "comment-text",
+                "placeholder": "Ingresar comentario",
+                "required": "True",
+                "max_length": 500,
+                "min_length": 10,
+                "rows": 2,
+                "cols": 10,
+                "style":"min-width: 100%",
+            }
+        ),
+    )

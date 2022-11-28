@@ -1,0 +1,43 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block yajuu_title %}
+
+Preguntas | Yajuu
+
+{% endblock %}
+
+{% block yajuu_header %}
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+<a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
+    <h1 style="color: rgb(122, 2, 151); font-size:2.3em;">Yajuu! respuestas</h1>
+</a>
+<nav id="navbar" class="navbar">
+    <ul>
+        <li style="font-size: 1.5em; align-items: center;"  >Preguntas actuales | Yajuu</li>
+    </ul>
+</nav>
+    </div>
+</header>
+
+{% endblock %}
+
+{% block yajuu_body %}
+
+{% for post in post_list %}
+<!-- Post preview -->
+    <a href="{% url 'post:post-detail' post.id %}">
+        <h2 class="post-title">La pregunta es: {{ post.title }}</h2>
+        <h3 class="post-subtitle">Para la categoria: {{ post.tag }}</h3>
+    </a>
+<p class="post-meta">
+    Creado en:
+    <span style="color: #0b4956;" href="">{{ post.created_at }}</span>
+</p>
+<!-- Divider-->
+<hr class="my-4" />
+{% endfor %}
+
+{% endblock %}

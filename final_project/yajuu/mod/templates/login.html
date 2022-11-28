@@ -1,0 +1,22 @@
+<title>Iniciar sesión | Yajuu</title>
+{% extends "home/index.html" %}
+
+{% load static %}
+ 
+{% block contenido_body %}
+
+<body>
+    
+    <form action="" method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit"> Iniciar sesión</button>
+    
+    </form>
+    
+</body>
+</html>
+{% endblock %}

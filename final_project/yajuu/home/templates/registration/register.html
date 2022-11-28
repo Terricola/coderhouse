@@ -1,0 +1,32 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block yajuu_title %}
+Registro | Yajuu
+{% endblock %}
+
+{% block yajuu_header %}
+<header id="header" class="header d-flex align-items-center fixed-top">
+
+    <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 style="color: rgb(122, 2, 151); font-size:2.3em;">Yajuu! respuestas</h1>
+    </a>
+    
+    <h3 style="padding-left: 2%;">Registro | Yajuu </h3>
+
+</header>
+{% endblock %}
+
+{% block yajuu_body %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" class="btn btn-primary" value="Registrar usuario" />
+</form>
+
+{% endblock %}

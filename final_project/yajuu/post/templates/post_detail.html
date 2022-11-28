@@ -1,29 +1,61 @@
-<title>Resultados busqueda | Yajuu</title>
 {% extends "home/index.html" %}
-
 {% load static %}
+
+{% block yajuu_title %}
+{{ post.title }} | Yajuu  
+{% endblock %}
  
-{% block contenido_body %}
+{% block yajuu_body %}
 
-<body>
-    
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.media }}
-        <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
-            <h1 style="color: rgb(122, 2, 151);">Datos actuales en la base de datos para Post:</h1>
-            {% for event in event_list %}
-                <strong>Registro #{{ event.id }}</strong>
-                <ul>
-                    <li><strong>Pregunta:</strong> {{ event.title }}</li>
-                    <li><strong>Categoria:</strong> {{ event.tag }}</li>
-                    <li><strong>Descripción:</strong> {{ event.description }}</li>
-                </ul>
-            {% endfor %}
+    <!-- Post preview-->
+    <div class="post-preview">
+        <h1>{{ post.title }}</h1>
+        <h3 class="" style="font-size: 1.4em;">Catergoria: {{ post.tag }}</h3>
+        <p class="post-meta">
+            Creado por
+            <span style="color: #0b4956;" href="">{{ post.owner.username }}</span>
+            ( {{ post.created_at }} )
+            <br>
+            Última fecha de actualización ( {{ post.updated_at }} )
+        </p>
 
-    </form>
-        </div>
-    
-</body>
-</html>
+        <!-- Description -->
+        <p class="" style="font-size: 1.5em;">{{ post.description|safe }}</p> <!-- ckeditor-->
+        <!-- Update-Delete link only for the owner -->
+        {% if user == post.owner or user.is_superuser %}
+            <p style="text-align: center">
+                <a href="{% url 'post:post-update' post.id %}">
+                    <i style="color: #1c1c91;"></i> Editar Pregunta
+                </a>
+                &ensp; | &ensp;
+                <a href="{% url 'post:post-delete' post.id %}">
+                    <i class="" style="color: #881a1a;"></i> Eliminar Pregunta
+                </a>
+            </p>
+        {% endif %}
+
+        <!-- Divider-->
+        <hr class="my-4" />
+
+        <!-- Comment creation-->
+        <form method="post" action="{% url 'post:comment-create' post.id %}">
+            {% csrf_token %}
+            {{ comment_form }}
+        <input type="submit" value="Publicar comentario">
+        </form>
+        {% if not comments %}
+            <p></p>
+        {% endif %}
+        
+        <!-- Comments list-->
+        {% for post in posts %}
+            <p>
+                {{ comment.text }}
+                ({{ comment.owner.username }} | {{ comment.update_at }})
+                {% if user == comment.owner or user.is_superuser %}
+                    <a href="{% url 'post:comment-delete' post.id %}"></a>
+                {% endif %}
+            </p>
+        {% endfor %}
+
 {% endblock %}

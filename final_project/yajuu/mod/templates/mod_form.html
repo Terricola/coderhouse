@@ -1,14 +1,16 @@
 <title>Formulario Mods | Yajuu mods</title>
 {% extends "home/index.html" %}
-
 {% load static %}
-{% block contenido_body %}
+
+{% block yajuu_body %}
 
 <body>
     
     <form action="" method="POST">{% csrf_token %}
         <div style="border: 2px solid rgb(52, 177, 52); margin: auto; padding-left: 35%; padding-top: 1em; padding-bottom: 1em;">
             <table>
+                <p style="color: rgb(122, 2, 151); font-size:1.5em;">Por favor tener en cuenta que debes ser mayor de edad para poder aplicar a mod.</p>
+                <p style="color: rgb(122, 2, 151); font-size:1.4em;">Un mod o moderador se encarga de revisar las preguntas de la comunidad para verificar<br>que cumplan con los lineamientos internos de Yajuu! respuestas.</p>
 
                 {{ my_form.as_table }}
 

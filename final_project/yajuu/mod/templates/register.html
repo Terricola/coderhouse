@@ -1,0 +1,22 @@
+<title>Registro | Yajuu</title>
+{% extends "home/index.html" %}
+
+{% load static %}
+ 
+{% block contenido_body %}
+
+<body>
+    
+    <form action="" method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_table }}
+
+        <button type="submit"> Registrarse</button>
+    
+    </form>
+    
+</body>
+</html>
+{% endblock %}
