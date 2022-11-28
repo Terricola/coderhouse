@@ -1,0 +1,19 @@
+{% extends "home/index.html" %}
+{% load static %}
+
+{% block yajuu_title %}
+Eliminar pregunta | Yajuu
+{% endblock %}
+ 
+{% block yajuu_body %}
+
+
+<h1>Está seguro de que desea eliminar la pregunta: {{ post.title }}?</h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Si, eliminar.">
+    <a class="btn btn-primary" href="{% url 'post:post-list' %}" >Cancelar</a>
+</form>
+
+{% endblock %}

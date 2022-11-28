@@ -31,14 +31,12 @@ def mod_form(request):
             )
 
             data.save()
-            messages.success(
-                request,
-                f"El usuario {information['name']} ha sido creado exitosamente"
-            )
+            #messages.success(request, f"El usuario {information['username']} ha sido creado exitosamente")
+            messages.success(request, f"Gracias por enviar tu solicitud {information['name']}")
 
             return render(
                 request=request,
-                template_name="mod_form.html",
+                template_name="home/index.html",
             )          
     
     else:

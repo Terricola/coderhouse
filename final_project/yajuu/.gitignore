@@ -15,3 +15,6 @@ media/*
 
 # env settings
 settings.ini
+
+# file properties apple
+.DS_Store
