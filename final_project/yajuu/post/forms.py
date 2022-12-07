@@ -55,9 +55,11 @@ class PostForm(forms.ModelForm):
         ),
     )
     
+    image = forms.ImageField()
+
     class Meta:
         model = Post
-        fields = ["title", "tag", "description"]
+        fields = ["title", "tag", "description", "image"]
 
 class CommentForm(forms.Form):
     comment_text = forms.CharField(

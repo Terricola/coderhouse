@@ -52,4 +52,4 @@ class PostTestCase(TestCase):
         for mock_title, mock_tag in zip(self.mock_titles, self.mock_tags):
             post_test = Post.objects.get(title=mock_title)
             self.assertEqual(post_test.owner.username, "testuser")
-            self.assertEqual(post_test.tag, mock_tag)
+            self.assertEqual(post_test.tag, str(mock_tag))

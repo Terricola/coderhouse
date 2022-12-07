@@ -84,26 +84,26 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         data = form.cleaned_data
         form.instance.owner = self.request.user
         actual_objects = Post.objects.filter(
-            name=data["name"], code=data["code"]
+            title=data["title"], tag=data["tag"]
         ).count()
         if actual_objects:
             messages.error(
                 self.request,
-                f"El curso {data['name']} - {data['code']} ya está creado",
+                f"La pregunta {data['title']} de la categoria {data['tag']} ya existe",
             )
-            form.add_error("name", ValidationError("Acción no válida"))
+            form.add_error("title", ValidationError("Acción no válida"))
             return super().form_invalid(form)
         else:
             messages.success(
                 self.request,
-                f"Curso {data['name']} - {data['code']} creado exitosamente!",
+                f"Pregunta {data['title']} de la categoria {data['tag']} creada exitosamente!",
             )
             return super().form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ["title", "tag", "description"]
+    fields = ["title", "tag", "description", "image"]
 
     def get_success_url(self):
         post_id = self.kwargs["pk"]
@@ -111,7 +111,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
-    model = Post
+    model = Post    
     success_url = reverse_lazy("post:post-list")
 
 

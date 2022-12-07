@@ -10,7 +10,7 @@ class Post(models.Model):
     title = models.CharField(max_length=40)
     tag = models.CharField(max_length=25)
     description = RichTextField(null=True, blank=True)
-    #image = models.ImageField(upload_to='post', null=True, blank=True)
+    image = models.ImageField(upload_to='post', null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.ManyToManyField(
         User, through="Comment", related_name="comments_owned"
