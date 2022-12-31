@@ -1,0 +1,11 @@
+.env
+venv/*
+
+# env settings
+settings.ini
+
+# file properties apple
+**/.DS_Store
+.DS_Store
+DS_Store/*
+DS_store
